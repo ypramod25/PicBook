@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
-const DB_URL = process.env.DB_URL;
+import { DB_URL } from "./serverConfig.js";
+
 
 export default async function connectDB() {
   try {

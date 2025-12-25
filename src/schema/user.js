@@ -9,9 +9,9 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        requrire: true,
+        required: true,
         unique: true,
-        minLength: 5,
+        minLength: 15,
         validate: {
             validator: function(emailValue) {
                 return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailValue);

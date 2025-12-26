@@ -16,3 +16,11 @@ export async function createPost(req, res) {
     });
 }
 
+export async function getAllPosts(req, res) {
+    // Here, you would typically fetch all posts from your database
+    return res.status(200).json({
+        success: true,
+        message: "Fetched all posts successfully",
+        data: [] // Replace with actual posts data
+    });
+}

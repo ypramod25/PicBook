@@ -1,4 +1,4 @@
-import {createPost} from '../repositories/postRepo.js'
+import {countAllPosts, createPost, findAllPosts} from '../repositories/postRepo.js'
 
 export const createPostService = async (createPostObject) => {
     //1. Take the image of post and upload on aws s3 or cloudinary
@@ -11,4 +11,13 @@ export const createPostService = async (createPostObject) => {
     const newPost = await createPost(caption, imageUrl, createPostObject.userId);
     return newPost;
 
+}
+
+export const getAllPostsService = async (offset = 0, limit = 10) => {
+    // Fetch all posts from db using postRepo
+    const posts = await findAllPosts(offset, limit);
+    const totalDocuments = await countAllPosts();
+    const totalPages = Math.ceil(totalDocuments / limit);
+
+    return {posts, totalPages, totalDocuments} ;
 }

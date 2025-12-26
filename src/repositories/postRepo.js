@@ -20,9 +20,19 @@ export const findPostById = async (postId) => {
     }
 }
 
-export const findAllPosts = async () => {
+export const countAllPosts = async() => {
+    try{
+        const count = await post.countDocuments();
+        return count;
+    } catch(error){
+        throw new Error('Error counting all posts');
+    }
+}
+
+export const findAllPosts = async (offset, limit) => {
     try {
-        const posts = await post.find({});
+        // Fetch all posts with pagination , sorted by creation date descending
+        const posts = await post.find().sort({ createdAt: -1 }).skip(offset).limit(limit);
         return posts;
     } catch (error) {
         throw new Error('Error finding all posts');

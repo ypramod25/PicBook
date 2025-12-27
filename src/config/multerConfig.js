@@ -8,6 +8,13 @@ export const s3Uploader = multer({ //s3uploader is a object
         s3: s3,//s3 instance
         bucket: AWS_BUCKET_NAME,//bucket name where the file will be stored
         key: function (req, file, cb) { //this key function will set the file name in s3 bucket
+            if(!file) {
+                return cb(new Error("File not found"));
+            }
+            //check mimetype of file (jpeg, png etc.) and set the file name accordingly
+            if(file.mimetype != "image/jpeg" && file.mimetype != "image/png") {
+                return cb(new Error("Invalid file type, only JPEG and PNG is allowed!"));
+            }
             console.log("File received:", file);
             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
             const fileName = file.fieldname + '-' + uniqueSuffix + '-' + file.originalname + '.' + file.mimetype.split('/')[1];

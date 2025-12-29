@@ -2,6 +2,8 @@ import { createPostService, deletePostByIdService, getAllPostsService } from '..
 
 export async function createPost(req, res) {
 
+    const userDetails  = req.user; //retrieved from isAuthenticated middleware
+
     if(!req.file || !req.file.location) {
         return res.status(400).json({
             success: false,
@@ -9,11 +11,11 @@ export async function createPost(req, res) {
         });
     }
 
-    console.log("File uploaded to S3:", req.file);
     // Here, you would typically save the post details (including imageUrl) to your database
     const post = await createPostService({
         caption: req.body.caption,
-        imageUrl: req.file.location
+        imageUrl: req.file.location,
+        userId: userDetails._id
     });
 
     return res.status(201).json({

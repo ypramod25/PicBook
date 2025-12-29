@@ -7,8 +7,9 @@ export const createPostService = async (createPostObject) => {
     //4. Return the post object
     const caption = createPostObject.caption;
     const imageUrl = createPostObject.imageUrl;
+    const userId = createPostObject.userId;
 
-    const newPost = await createPost(caption, imageUrl, createPostObject.userId);
+    const newPost = await createPost(caption, imageUrl, userId);
     return newPost;
 
 }

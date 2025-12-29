@@ -1,6 +1,7 @@
 import express from 'express';
 import connectDB from './config/dbConfig.js';
 import apiRouter from './routers/apiRouter.js';
+import { isAuthenticated } from './middlewares/authMiddleware.js';
 
 const PORT = 3000;
 const app = express();//create express app server instance
@@ -11,7 +12,7 @@ app.use(express.urlencoded()); //middleware to parse urlencoded body
 
 app.use('/api', apiRouter);//mount api router on /api path to handle all api routes
 
-app.get('/hello', (req, res) => {
+app.get('/hello', isAuthenticated, (req, res) => {
   console.log(req.query);
   console.log(req.body);
   return res.json({ message: 'Hello World' });

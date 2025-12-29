@@ -9,6 +9,15 @@ export const findUserByEmail = async (email) => {
     }
 }
 
+export const createUser = async (userData) => {
+    try {
+        const newUser = new user(userData);
+        return await newUser.save();
+    } catch (error) {
+        throw new Error('Error inserting user');
+    }
+}
+
 export const findAllUsers = async () => {
     try {
         const users = await user.find({});      

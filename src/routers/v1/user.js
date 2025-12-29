@@ -1,10 +1,12 @@
-//Here
+//Here we will define routes related to user operations
 
 import express from 'express'
-import { getProfile } from '../../controllers/userController.js';
+import { signup } from '../../controllers/userController';
+import { zodSignupSchema } from '../../validators/zodSignupSchema.js';
+import { validate } from '../../validators/zodValidator.js';
 
 const userRouter = express.Router();
 
-userRouter.get('/profile', getProfile)
+userRouter.post('/signup',validate(zodSignupSchema), signup)
 
 export default userRouter;

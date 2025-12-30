@@ -51,7 +51,7 @@ export async function getAllPosts(req, res) {
 export async function deletePostById(req, res) {
     try {
         const postId = req.params.id;
-        const response = await deletePostByIdService(postId);
+        const response = await deletePostByIdService(postId, req.user._id);
         if(!response){//if no post found with given id
             return res.status(404).json({
                 success: false,
@@ -64,6 +64,12 @@ export async function deletePostById(req, res) {
             data: response
         });
     } catch (error) {
+        if(error.status){//known error from service (like duplicate user)
+            return res.status(error.status).json({
+                success: false,
+                message: error.message
+            });
+        }
         console.log(error);
         return res.status(500).json({
             success: false, 

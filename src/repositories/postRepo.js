@@ -32,7 +32,7 @@ export const countAllPosts = async() => {
 export const findAllPosts = async (offset, limit) => {
     try {
         // Fetch all posts with pagination , sorted by creation date descending
-        const posts = await post.find().sort({ createdAt: -1 }).skip(offset).limit(limit);
+        const posts = await post.find().sort({ createdAt: -1 }).skip(offset).limit(limit).populate('userId', 'username email _id'); //populate user details
         return posts;
     } catch (error) {
         throw new Error('Error finding all posts');

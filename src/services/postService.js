@@ -1,4 +1,4 @@
-import {countAllPosts, createPost, deletePostById, findAllPosts, updatePostById} from '../repositories/postRepo.js'
+import {countAllPosts, createPost, deletePostById, findAllPosts, findPostById, updatePostById} from '../repositories/postRepo.js'
 
 export const createPostService = async (createPostObject) => {
     //1. Take the image of post and upload on aws s3 or cloudinary
@@ -23,8 +23,15 @@ export const getAllPostsService = async (offset = 0, limit = 10) => {
     return {posts, totalPages, totalDocuments} ;
 }
 
-export const deletePostByIdService = async (postId) => {
+export const deletePostByIdService = async (postId, userId) => {
     // Delete the post from db using postRepo
+    const post = await findPostById(postId);
+    if(post.userId.toString() !== userId.toString()){
+        throw{
+            status: 401,
+            message: "You are not authorized to delete this post"
+        }
+    }
     const response = await deletePostById(postId);
     return response;
 }

@@ -2,7 +2,7 @@
 // We look at the remaining part or url after /posts path
 
 import express from 'express';
-import { createPost, deletePostById } from '../../controllers/postController.js';
+import { createPost, deletePostById, updatePost } from '../../controllers/postController.js';
 import { s3Uploader } from '../../config/multerConfig.js';
 import { validate } from '../../validators/zodValidator.js';
 import { zodPostSchema } from '../../validators/zodPostSchema.js';
@@ -13,7 +13,7 @@ const postRouter = express.Router(); // Router object to modularize routes
 
 postRouter.post('/', isAuthenticated, s3Uploader.single('image'), validate(zodPostSchema), createPost);
 postRouter.get('/', getAllPosts);
-postRouter.delete('/:id', deletePostById);
+postRouter.delete('/:id', isAuthenticated, deletePostById);
 postRouter.put('/:id', s3Uploader.single('image'), updatePost);
 
 export default postRouter;

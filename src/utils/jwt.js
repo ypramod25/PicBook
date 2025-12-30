@@ -7,7 +7,7 @@ export const generateJwtToken = (payload, secret = JWT_SECRET, options = {}) => 
 
 export const verifyJwtToken = (token, secret = JWT_SECRET, options = {}) => {
     try {
-        return jwt.verify(token, secret, options);
+        return jwt.verify(token, secret, options); //this returns the payload if token is valid
     } catch (error) {
         throw error;
     }

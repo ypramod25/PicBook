@@ -6,7 +6,7 @@ import { createPost, deletePostById, updatePost } from '../../controllers/postCo
 import { s3Uploader } from '../../config/multerConfig.js';
 import { validate } from '../../validators/zodValidator.js';
 import { zodPostSchema } from '../../validators/zodPostSchema.js';
-import { isAuthenticated } from '../../middlewares/authMiddleware.js';
+import { isAdmin, isAuthenticated } from '../../middlewares/authMiddleware.js';
 
 const postRouter = express.Router(); // Router object to modularize routes
 // You can implement other post related routes here and then export the router
@@ -14,6 +14,6 @@ const postRouter = express.Router(); // Router object to modularize routes
 postRouter.post('/', isAuthenticated, s3Uploader.single('image'), validate(zodPostSchema), createPost);
 postRouter.get('/', getAllPosts);
 postRouter.delete('/:id', isAuthenticated, deletePostById);
-postRouter.put('/:id', s3Uploader.single('image'), updatePost);
+postRouter.put('/:id', isAuthenticated, isAdmin, s3Uploader.single('image'), updatePost);
 
 export default postRouter;

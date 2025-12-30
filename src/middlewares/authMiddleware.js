@@ -32,3 +32,14 @@ export const isAuthenticated = async (req, res, next) => {
         });
     }
 }
+
+export const isAdmin = async (req, res, next) => {
+    // Check if user role is admin
+    if(req.user.role !== 'admin') {
+        return res.status(401).json({
+            success: false,
+            message: "You are not authorized to perform this action"
+        });
+    }
+    next();
+}

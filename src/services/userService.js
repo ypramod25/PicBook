@@ -37,7 +37,7 @@ export const signinUserService = async (userDetails) => {
             }
         }
         //3. jwt token generation can be done 
-        const token = generateJwtToken({id: user._id, email: user.email}, JWT_SECRET, {expiresIn: '1d'});
+        const token = generateJwtToken({id: user._id, email: user.email, username: user.username, role: user.role || 'user'}, JWT_SECRET, {expiresIn: '1d'});
         user.token = token; //attach token to user object
 
         return user;

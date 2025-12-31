@@ -20,7 +20,7 @@ app.use(express.urlencoded()); //middleware to parse urlencoded body
 // app.use('/api', apiRouter);//mount api router on /api path to handle all api routes
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));//swagger api docs route
 
-app.get('/hello', isAuthenticated, (req, res) => {
+app.get('/hello', (req, res) => {
   console.log(req.query);
   console.log(req.body);
   return res.json({ message: 'Hello World' });

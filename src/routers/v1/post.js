@@ -11,6 +11,25 @@ import { isAdmin, isAuthenticated } from '../../middlewares/authMiddleware.js';
 const postRouter = express.Router(); // Router object to modularize routes
 // You can implement other post related routes here and then export the router
 
+/**
+ * @swagger
+ * /api/v1/posts:
+ *   post:
+ *     summary: Create a new post
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             $ref: '#/components/schemas/Post'
+ *     responses:
+ *       201:
+ *         description: Post created successfully
+ */
+
 postRouter.post('/', isAuthenticated, s3Uploader.single('image'), validate(zodPostSchema), createPost);
 postRouter.get('/', getAllPosts);
 postRouter.delete('/:id', isAuthenticated, deletePostById);

@@ -5,6 +5,7 @@ import { isAuthenticated } from './middlewares/authMiddleware.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import { options } from './utils/swaggerOptions.js';
+import ip from 'ip';
 
 // Swagger setup
 const swaggerDocs = swaggerJSDoc(options);
@@ -23,7 +24,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));//swagger ap
 app.get('/hello', (req, res) => {
   console.log(req.query);
   console.log(req.body);
-  return res.json({ message: 'Hello World' });
+  const ipadd = ip.address();
+  return res.json({ message: 'Hello World', ip: ipadd });
 })
 
 

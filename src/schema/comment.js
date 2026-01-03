@@ -3,33 +3,33 @@ import user from './user';
 import like from './like';
 
 const commentSchema = new mongoose.Schema({
-    content: {
+    content: {// comment text
         type: String,
         required: true,
         minLength: 1
     },
-    userId: {
+    userId: {// user who made the comment
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: user
     },
-    onModel: {
+    onModel: {// indicates whether the comment is on a Post or another Comment
         type: String,
         required: true,
         enum: ["Post", "Comment"]
     },
-    commentableId: {
+    commentableId: {// ID of the Post or Comment being commented on
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         refPath: "onModel"
     },
-    reply: [
+    reply: [// replies to this comment
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Comment"
+            ref: comment
         }
     ],
-    likes: [
+    likes: [// likes on this comment
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: like
